@@ -15,7 +15,8 @@
   <title>La Finca</title>
 
   <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
   <!-- font awesome style -->
@@ -38,7 +39,7 @@
             <a href="">
               <i class="fa fa-phone" aria-hidden="true"></i>
               <span>
-                Call : +01 123455678990
+                Call : +52 123455678990
               </span>
             </a>
             <a href="">
@@ -59,23 +60,24 @@
               </span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class=""> </span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
                 <li class="nav-item ">
-                  <a class="nav-link" href="index.html">Inicio <span class="sr-only"></span></a>
+                  <a class="nav-link" href="index.html">Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="about.html"> About</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                   <a class="nav-link" href="service.html">Servicios</a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="contact.html">Contactanos</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html">Contactos</a>
                 </li>
               </ul>
             </div>
@@ -86,57 +88,81 @@
     <!-- end header section -->
   </div>
 
+  <!-- service section -->
 
-  <!-- contact section -->
-
-  <section class="contact_section layout_padding">
-    <div class="container">
-      <div class="heading_container">
-        <h2>
-          Contactanos
-        </h2>
+  <section class="service_section layout_padding">
+    <div class="container ">
+      <div class="heading_container heading_center">
+        <h2> Nuestros Servicios </h2>
       </div>
       <div class="row">
-        <div class="col-md-6">
-          <form action="">
-            <div>
-              <input type="text" placeholder="Nombre" />
+        <div class="col-sm-6 col-md-4 mx-auto">
+          <a href="alquilar.html">
+          <div class="box ">
+            <div class="img-box">
+              <img src="images/rent.png" alt="" />
             </div>
-            <div>
-              <input type="text" placeholder="Numero de Telefono" />
+            <div class="detail-box">
+              <h5>
+                Alquilar
+              </h5>
+              <p>
+                when looking at its layout. The point of using Lorem Ipsum is
+                that it has a more-or-less normal
+              </p>
             </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Mensaje" />
-            </div>
-            <div class="d-flex ">
-              <button>
-                Enviar
-              </button>
-            </div>
-          </form>
+          </div>            
+          </a>
         </div>
-        <div class="col-md-6">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap" style="width:100%;height:100%;"></div>
+        <div class="col-sm-6 col-md-4 mx-auto">
+          <a href="comprar.html">
+            <div class="box ">
+              <div class="img-box">
+                <img src="images/signo.png" alt="" />
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Comprar
+                </h5>
+                <p>
+                  when looking at its layout. The point of using Lorem Ipsum is
+                  that it has a more-or-less normal
+                </p>
+              </div>
             </div>
+          </a>
+        </div>
+        <a href="vender.html">
+          <div class="col-sm-6 col-md-4 mx-auto">
+            <a href="">
+              <div class="box ">
+                <div class="img-box">
+                  <img src="images/3945183.png" alt="" />
+                </div>
+                <div class="detail-box">
+                  <h5>
+                    Vender
+                  </h5>
+                  <p>
+                    when looking at its layout. The point of using Lorem Ipsum is
+                    that it has a more-or-less normal
+                  </p>
+                </div>
+              </div>
+            </a>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- end contact section -->
-
+  <!-- end service section -->
 
   <!-- info section -->
   <section class="info_section ">
     <div class="container">
       <h4>
-        Get In Touch
+        Ponerse En Contacto
       </h4>
       <div class="row">
         <div class="col-lg-10 mx-auto">
@@ -161,7 +187,7 @@
                       <i class="fa fa-phone" aria-hidden="true"></i>
                     </div>
                     <p>
-                      +02 1234567890
+                      +52 1234567890
                     </p>
                   </div>
                 </a>
@@ -225,7 +251,8 @@
   </script>
   <script src="js/custom.js"></script>
   <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
   <!-- End Google Map -->
 
 
