@@ -3,7 +3,7 @@ import { obtenerPropiedades } from "../js/propiedades";
 const url = './api/datos.php?tabla=propiedades';
 
 // Alerta
-const alerta = document.querySelector('#alerta');
+const alerta = document.querySelector('#alerta') ;
 
 // Formulario
 const formulario = document.querySelector('#formulario');
@@ -96,7 +96,7 @@ btnNuevo.addEventListener('click', () => {
     formularioModal.show();
 })
     //faltan cosas por poner
-    
+
 /**
  * Define el mensaje de alerta
  * @param mensaje el mensaje a mostrar
