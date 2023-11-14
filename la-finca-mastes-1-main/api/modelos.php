@@ -16,7 +16,7 @@ class Modelo {
         } 
         // Establecemos el conjunto de caracteres a utf8
         $this->_db->set_charset(DB_CHARSET);
-        $this->_db->query("SET NAMES 'utf8'");
+        $this->_db->query("SET NAMES 'utf8_general_ci'");
     }
 }
 /* Fin de la clase principal */
