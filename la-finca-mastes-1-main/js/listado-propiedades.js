@@ -1,4 +1,4 @@
-import { obtenerPropiedades } from "../js/propiedades";
+import { actualizarPropiedades, eliminarPropiedades, obtenerPropiedades } from "../js/propiedades";
 
 const url = './api/datos.php?tabla=propiedades';
 
@@ -16,11 +16,11 @@ const inputTipo = document.querySelector("#tipo");
 const inputDireccion = document.querySelector("#direccion");
 const inputPiso = document.querySelector("#piso");
 const inputDepartamento = document.querySelector("#departamento");
-const inputCodpost = document.querySelector("#codpost");
+const inputCodpos = document.querySelector("#codpos");
 const inputLocalidad = document.querySelector("#localidad");
 const inputProvincia = document.querySelector("#provincia");
 const inputFoto = document.querySelector("#foto");
-const inputObservacioes = document.querySelector("#observaciones");
+const inputObservaciones = document.querySelector("#observaciones");
 const inputPropietario_id = document.querySelector("#propietario_id");
 const inputInquilino_id = document.querySelector("#inquilino_id");
 
@@ -31,47 +31,77 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Obtiene los artículos y los muestra
  */
-async function mostrarArticulos() {
-    const propiedades = await obtenerPropiedades();
-    console.log(propiedades);
+async function mostrarPropiedades() {
+    const Propiedades = await seleccionarPropiedades();
+    console.log(Propiedades);
     const listado = document.querySelector("#listado"); // getElementById("listado")
-    listado.comprarHTML = '';
-    for (let propiedades of propiedades) {
-      listado.comprarHTML += `
-      <div class="col">
-        <div class="card" style="width:18rem;">
-            <img src="imagenes/productos/${propiedades.Foto ?? 'nodisponible.png'}" alt="${propiedades.tipo}" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <span name="spancodigo">${propiedades.id}</span> - <span name="spantipo">${propiedades.tipo}</span>
-                </h5>
-                <p class="card-text">
-                    ${articulo.descripcion}.
-                </p>
-                <input type="number" name="inputtipo" class="form-control" value="0" min="0" max="30" onchange="calcularPedido()">
-            </div>
-        </div>
-    </div>
-`;
+    listado.innerHTML = '';
+    for (let articulo of Propiedades) {
+      if(logueado) {
+          listado.innerHTML += `
+                    <div class="col">
+                      <div class="card" style="width:18rem;">
+                          <img src="imagenes/productos/${propiedades.foto??'nodisponible.png'}" alt="${propiedades.tipo}" class="card-img-top">
+                          <div class="card-body">
+                              <h5 class="card-title">
+                                  <span name="spancodigo">${propiedades.codigo}</span> - <span name="spannombre">${propiedades.tipo}</span>
+                              </h5>
+                              <p class="card-text">
+                                  ${propiedades.descripcion}.
+                              </p>
+                              <h5>$ <span name="spancodpos">${propiedades.codpos}</span></h5>
+                              <input type="number" name="inputcantidad" class="form-control" value="0" min="0" max="30" onchange="calcularPedido()">
+                          </div>
+                          <div class="card-footer d-flex justify-content-center">
+                              <a class="btnEditar btn btn-primary">Editar</a>
+                              <a class="btnBorrar btn btn-danger">Borrar</a>
+                              <input type="hidden" class="idPropiedades" value="${propiedades.id}">
+                              <input type="hidden" class="fotoPropiedades" value="${propiedades.foto??'nodisponible.png'}">
+                          </div>
+                      </div>
+                  </div>
+                  `;
+      } else {
+          listado.innerHTML += `
+                    <div class="col">
+                      <div class="card" style="width:18rem;">
+                          <img src="imagenes/productos/${propiedades.foto??'nodisponible.png'}" alt="${propiedades.tipo}" class="card-img-top">
+                          <div class="card-body">
+                              <h5 class="card-title">
+                                  <span name="spancodigo">${propiedades.codigo}</span> - <span name="spantipo">${propiedades.tipo}</span>
+                              </h5>
+                              <p class="card-text">
+                                  ${propiedades.descripcion}.
+                              </p>
+                              <h5>$ <span name="spancodpos">${propiedades.codpos}</span></h5>
+                              <input type="number" name="inputcantidad" class="form-control" value="0" min="0" max="1" onchange="calcularPedido()">
+                          </div>
+                      </div>
+                  </div>
+                  `;
+      }
     }
   }
-
+  
   /**
  * Ejecuta el evento submit del formulario
  */
 formulario.addEventListener('submit', function(e) {
     e.preventDefault();     // Prevenimos la acción por defecto
     const datos = new FormData(formulario); // Guardamos los datos del formulario
-    fetch(url + '&accion=insertar', {
-        method: 'POST',
-        body: datos
-    })
-    .then(res => res.json())
-    .then(data => {
-        insertarAlerta(data, 'success');
-        mostrarPropiedades();
-    })
-})
+    switch(opcion) {
+        case 'insertar':
+            mensajeAlerta = `Datos guardados`;
+            insertarPropiedades(datos);                        
+            break;
+        case 'actualizar':
+            mensajeAlerta = `Datos actualizados`;
+            actualizarPropiedades(datos, id);
+            break;
+    }
+    insertarAlerta(mensajeAlerta, 'success');
+    mostrarPropiedades();
+});
 
 /**
  * Ejecuta el evento click del Botón Nuevo
@@ -83,19 +113,20 @@ btnNuevo.addEventListener('click', () => {
     inputDireccion.value = null;
     inputPiso.value = null;
     inputDepartamento.value = null;
-    inputCodpost.value = null;
+    inputCodpos.value = null;
     inputLocalidad.value = null;
     inputProvincia.value = null;
     inputFoto.value = null;
-    inputObservacioes.value = null;
+    inputObservaciones.value = null;
     inputPropietario_id.value = null;
     inputInquilino_id.value = null;
     frmImagen.src = './imagenes/productos/nodisponible.png';
 
     // Mostramos el formulario
     formularioModal.show();
-})
-    //faltan cosas por poner
+
+    opcion = 'incertar';
+});
 
 /**
  * Define el mensaje de alerta
@@ -111,4 +142,68 @@ const insertarAlerta = (mensaje, tipo) => {
     </div>
     `;
     alerta.append(envoltorio);
+};
+
+/** 
+ * Función on para determinar en qué elemento se realiza un evento 
+ * @param elemento el elemento al que se sealiza el evento 
+ * @param evento el evento realizado
+ * @param selector el selector seleccionado
+ * @param manejador el método que maneja el evento
+ */
+const on = (elemento, evento, selector, manejador) => {
+    elemento.addEventListener(evento, e => {
+        if (e.target.closest(selector)) {
+            manejador(e);
+        }
+    })
 }
+
+/** 
+ * Ejecutamos la función on para el botón Editar 
+ */
+
+on(document, 'click', '.btnEditar', e => {
+    const cardFooter = e.target.parentNode; // Guardamos el elemento padre del botón
+
+    // Obtenemos los datos del artículo seleccionado
+    id = cardFooter.querySelector('.idPropiedad').value;
+    const tipo = cardFooter.parentNode.querySelector('span[name=spantipo]').innerHTML;
+    const direccion = cardFooter.parentNode.querySelector('span[name=spandireccion]').innerHTML;
+    const piso = cardFooter.parentNode.querySelector('.card-text').innerHTML;
+    const departamento = cardFooter.parentNode.querySelector('span[name=spancodpos]').innerHTML;
+    const foto = cardFooter.querySelector('.fotoPropiedad').value;
+
+    // Asignamos los valores a los input del formulario
+    inputId.value = Id;
+    inputTipo.value = Tipo;
+    inputDireccion.value = Direccion;
+    inputPiso.value = Piso;
+    inputDepartamento.value = Departamento;
+    inputCodpos.value = Codpos;
+    inputLocalidad.value = Localidad;
+    inputProvincia.value = Provincia;
+    inputFoto.value = Foto;
+    inputObservaciones.value = Observaciones;
+    inputPropietario_id.value = Propietario_id;
+    inputInquilino_id.value = Inquilino_id;
+    frmImagen.src = `./imagenes/productos/${imagen}`;
+    formularioModal.show(); // Mostramos el formulario
+    opcion = 'actualizar';
+
+})
+
+/**
+ *  Ejecutamos la función on para el botón Borrar
+ */
+on(document, 'click', '.btnBorrar', e => {
+    const cardFooter = e.target.parentNode; // Guardamos el elemento padre del botón
+    id = cardFooter.querySelector('.idArticulo').value; // Obtenemos el id del artículo
+    const nombre = cardFooter.parentNode.querySelector('span[name=spannombre]').innerHTML; // Obtenemos el nombre del artículo
+    let aceptar = confirm(`¿Realmente desea eliminar a ${nombre}`); // Pedimos confirmación para eliminar
+    if (aceptar) {
+        eliminarPropiedades(id);
+        insertarAlerta(`${nombre}  borrado`, 'danger');
+        mostrarPropiedades();
+    }
+})
