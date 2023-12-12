@@ -1,4 +1,4 @@
-import { actualizarPropiedades, eliminarPropiedades, obtenerPropiedades } from "../js/propiedades";
+import { seleccionarPropiedades, insertarPropiedades, eliminarPropiedades } from "../modelos/propiedades";
 
 const url = './api/datos.php?tabla=propiedades';
 
@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     mostrarPropiedades();
 });
 
+// Imagen del formulario
+const frmImagen = document.querySelector("#frmimagen");
+
 /**
  * Obtiene los artículos y los muestra
  */
@@ -36,21 +39,20 @@ async function mostrarPropiedades() {
     console.log(Propiedades);
     const listado = document.querySelector("#listado"); // getElementById("listado")
     listado.innerHTML = '';
-    for (let articulo of Propiedades) {
+    for (let propiedad of Propiedades) {
       if(logueado) {
           listado.innerHTML += `
                     <div class="col">
                       <div class="card" style="width:18rem;">
-                          <img src="imagenes/productos/${propiedades.foto??'nodisponible.png'}" alt="${propiedades.tipo}" class="card-img-top">
+                          <img src="imagenes/propiedades/${propiedades.foto??'nodisponible.png'}" alt="${propiedades.tipo}" class="card-img-top">
                           <div class="card-body">
                               <h5 class="card-title">
-                                  <span name="spancodigo">${propiedades.codigo}</span> - <span name="spannombre">${propiedades.tipo}</span>
+                                  <span name="spancodigo">${propiedades.codigo}</span> - <span name="spantipo">${propiedades.tipo}</span>
                               </h5>
                               <p class="card-text">
                                   ${propiedades.descripcion}.
                               </p>
                               <h5>$ <span name="spancodpos">${propiedades.codpos}</span></h5>
-                              <input type="number" name="inputcantidad" class="form-control" value="0" min="0" max="30" onchange="calcularPedido()">
                           </div>
                           <div class="card-footer d-flex justify-content-center">
                               <a class="btnEditar btn btn-primary">Editar</a>
@@ -74,7 +76,6 @@ async function mostrarPropiedades() {
                                   ${propiedades.descripcion}.
                               </p>
                               <h5>$ <span name="spancodpos">${propiedades.codpos}</span></h5>
-                              <input type="number" name="inputcantidad" class="form-control" value="0" min="0" max="1" onchange="calcularPedido()">
                           </div>
                       </div>
                   </div>
